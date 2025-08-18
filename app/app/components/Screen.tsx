@@ -1,5 +1,6 @@
 'use client'
 import { JSX, PropsWithChildren } from 'react'
+import Image from 'next/image'
 
 type Props = PropsWithChildren<{ image: string; hotspots?: JSX.Element; id?: string; bg?: string }>
 
@@ -8,7 +9,7 @@ export default function Screen({ image, hotspots, id = 'app-screen', bg}: Props)
     <div className="app-shell">
       <div className="screen-frame" style={bg ? ({ background: bg} as React.CSSProperties) : undefined}>
         <div id={id} className="fit-box">
-          <img
+          <Image
             className="screen-img"
             src={image}
             alt="screen"
