@@ -1,4 +1,5 @@
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic' // no cache
 
 import { NextResponse } from 'next/server'
 import { getSheets } from '../../../lib/sheets' // 상대경로 주의
