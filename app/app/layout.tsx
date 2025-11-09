@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '퀴즈게임 | 식품의약품안전처',
+  title: '퀴즈게임 | 경상남도',
   description: '모바일 퀴즈 OX 게임',
 }
 
