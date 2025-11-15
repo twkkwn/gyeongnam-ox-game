@@ -6,18 +6,17 @@ import { saveScreenAsImage } from './lib/screenshot'
 
 // 퍼센트 기반 Hotspot 좌표(1152×2048 기준) — iOS/Android 동일 결과
 const HS = {
-  start: { left: 32, top: 46, width: 36, height: 10 },
+  start: { left: 35, top: 46, width: 31, height: 13 },
   options: [
-    { left: 19, width: 62, top: 45, height: 6 },
-    { left: 19, width: 62, top: 53, height: 6 },
-    { left: 19, width: 62, top: 61, height: 5 },
-    { left: 19, width: 62, top: 68, height: 6 },
-    { left: 19, width: 62, top: 76, height: 6 },
+    { left: 10, width: 81, top: 46, height: 7 },
+    { left: 10, width: 81, top: 55, height: 6 },
+    { left: 10, width: 81, top: 63, height: 7 },
+    { left: 10, width: 81, top: 72, height: 6 },
   ],
-  next:   { left: 25, top: 74, width: 50, height: 6 },
-  successSave: { left: 15,  top: 60, width: 71, height: 5 },
-  successHome: { left: 15,  top: 67, width: 71, height: 5 },
-  failureHome: { left: 15,  top: 59, width: 70, height: 6 },
+  next:   { left: 23, top: 82, width: 55, height: 5 },
+  successSave: { left: 23,  top: 72, width: 54, height: 5 },
+  successHome: { left: 23,  top: 78, width: 54, height: 5 },
+  failureHome: { left: 23,  top: 74, width: 54, height: 6 },
 } as const
 
 type Rect = {left:number; top:number; width:number; height:number}
@@ -46,9 +45,10 @@ function withKeyboard(onActivate: () => void) {
 }
 
 type Mode = 'main' | 'quiz' | 'answer' | 'success' | 'failure'
-type Picked = { id: 1|2|3|4|5; correctIndex: 1|2|3|4|5; image: string; answerImageO: string; answerImageX: string }
+type Picked = { id: 1|2|3|4|5|6; correctIndex: 1|2|3|4; image: string; answerImageO: string; answerImageX: string }
 
-const SUCCESS_BG = 'linear-gradient(to bottom, #fafeff, #61b8e7)'
+// const SUCCESS_BG = 'linear-gradient(to bottom, #fafeff, #61b8e7)'
+const SUCCESS_BG = '#ffffff'
 const FAILURE_BG = '#ffffff'
 
 // 1) 세션 ID
@@ -89,7 +89,7 @@ export default function Page() {
 
   // 이미지 프리로드
   useEffect(() => {
-    const imgs = ['/assets/main.png', '/assets/success.png', '/assets/failure.png', ...ALL_QUESTIONS.flatMap(q => [q.image, q.answerImageO, q.answerImageX])]
+    const imgs = ['/assets/main.jpg', '/assets/success.jpg', '/assets/failure.jpg', ...ALL_QUESTIONS.flatMap(q => [q.image, q.answerImageO, q.answerImageX])]
     imgs.forEach(src => { const im = new Image(); im.src = src })
   }, [])
  
@@ -119,7 +119,7 @@ export default function Page() {
   // ✅ 메인
   if (mode === 'main') {
     return (
-      <Screen image="/assets/main.png" hotspots={
+      <Screen image="/assets/main.jpg" hotspots={
         <button
           aria-label="게임 시작"
           className="hotspot__btn"
@@ -193,7 +193,7 @@ export default function Page() {
   if (mode === 'success') {
     const doSave = tap(() => saveScreenAsImage())
     return (
-      <Screen image="/assets/success.png" bg={SUCCESS_BG} hotspots={
+      <Screen image="/assets/success.jpg" bg={SUCCESS_BG} hotspots={
         <>
           <button
             aria-label="내 앨범으로 저장"
@@ -217,7 +217,7 @@ export default function Page() {
   // 실패
   const goHome = tap(() => setMode('main'))
   return (
-    <Screen image="/assets/failure.png" bg={FAILURE_BG} hotspots={
+    <Screen image="/assets/failure.jpg" bg={FAILURE_BG} hotspots={
       <button
         aria-label="메인으로 돌아가기"
         className="hotspot__btn"
