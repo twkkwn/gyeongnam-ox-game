@@ -103,18 +103,36 @@ export default function Page() {
     }
   }, [mode, i, picked])
 
-  // ✅ 새 라운드 시작
+    // ✅ 새 라운드 시작 (id 기반 고정 + 풀을 필터링해서 셔플)
   const newRound = tap(() => {
-    const others = ALL_QUESTIONS.slice(1)
-    for (let k = others.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [others[k], others[r]] = [others[r], others[k]] }
-    const selected = [ALL_QUESTIONS[0], ...others.slice(0, 2)] as Picked[]
+    const fixedId = 1
+    const fixed = ALL_QUESTIONS.find(q => q.id === fixedId)
+    const pool = ALL_QUESTIONS.filter(q => q.id !== fixedId)
+    // Fisher–Yates shuffle
+    for (let k = pool.length - 1; k > 0; k--) {
+      const r = Math.floor(Math.random() * (k + 1))
+      ;[pool[k], pool[r]] = [pool[r], pool[k]]
+    }
+    const selected = [fixed!, ...pool.slice(0, 2)] as Picked[]
     setPicked(selected)
     setI(0)
     setScore(0)
     setIsCorrect(null)
-    servedSetRef.current.clear()   // ✅ 새 라운드 때 출제 기록 초기화
+    servedSetRef.current.clear()
     setMode('quiz')
   })
+  // // ✅ 새 라운드 시작
+  // const newRound = tap(() => {
+  //   const others = ALL_QUESTIONS.slice(1)
+  //   for (let k = others.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [others[k], others[r]] = [others[r], others[k]] }
+  //   const selected = [ALL_QUESTIONS[0], ...others.slice(0, 2)] as Picked[]
+  //   setPicked(selected)
+  //   setI(0)
+  //   setScore(0)
+  //   setIsCorrect(null)
+  //   servedSetRef.current.clear()   // ✅ 새 라운드 때 출제 기록 초기화
+  //   setMode('quiz')
+  // })
 
   // ✅ 메인
   if (mode === 'main') {
