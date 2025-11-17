@@ -195,6 +195,7 @@ export default function Page() {
     return (
       <Screen image="/assets/success.jpg" bg={SUCCESS_BG} hotspots={
         <>
+        {/*
           <button
             aria-label="내 앨범으로 저장"
             className="hotspot__btn"
@@ -202,13 +203,13 @@ export default function Page() {
             onClick={doSave}
             onKeyDown={withKeyboard(doSave)}
           />
-          <button
+           <button
             aria-label="메인으로 돌아가기"
             className="hotspot__btn"
             style={pct(HS.successHome)}
             onClick={tap(() => setMode('main'))}
             onKeyDown={withKeyboard(() => setMode('main'))}
-          />
+          /> */}
         </>
       } />
     )
